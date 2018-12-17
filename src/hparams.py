@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser(description='Tensorflow Implementation of WaveG
 
 ##Training Parameters##
 #Sizes
-parser.add_argument('--batch_size', dest='batch_size', type=int, default=4, help='Batch Size')
+parser.add_argument('--batch_size', dest='batch_size', type=int, default=2, help='Batch Size')
 parser.add_argument('--mel_time_step', dest='mel_time_step', type=int, default=64, help='Time Step of Inputs')
 #Optimizer
 parser.add_argument('--lr', dest='lr', type=float, default=1e-4, help='Initial Learning Rate')
@@ -29,18 +29,18 @@ parser.add_argument('--use_weight_norm', dest='use_weight_norm', default=False, 
 
 ##Inference##
 parser.add_argument('--do_infer', dest='is_training', default=True, action='store_false', help='Default to training mode, do inference if --do_infer is specified')
-parser.add_argument('--infer_mel_dir', dest='infer_mel_dir', default='/data/lichen/waveglow/training_mels', help='Path to inference numpy files of mel spectrogram')
-parser.add_argument('--infer_path', dest='infer_path', default='/data/lichen/waveglow/inference', help='Path to output inference wavs')
+parser.add_argument('--infer_mel_dir', dest='infer_mel_dir', default='/var/pylon/data/speech/pylon/tts/ljspeech/mels', help='Path to inference numpy files of mel spectrogram')
+parser.add_argument('--infer_path', dest='infer_path', default='data/lichen/waveglow/inference', help='Path to output inference wavs')
 
 ##Sampling##
 parser.add_argument('--truncate_sample', dest='truncate_sample', default=False, action='store_true', help='Truncate the infer input mels to truncate_step due to GPU memory consideration or not')
 parser.add_argument('--truncate_step', dest='truncate_step', type=float, default=384, help='Truncate the infer input mels to truncate_step due to GPU memory consideration')
 
 ##Input Path##
-parser.add_argument('--metadata_dir', dest='metadata_dir', default='/data/lichen/TTS_data/LJSpeech-1.1/metadata.csv', help='Path to metadata.csv')
-parser.add_argument('--dataset_dir', dest='dataset_dir', default='/data/lichen/TTS_data/LJSpeech-1.1/wavs', help='Path to audio file for preprocessing dataset')
-parser.add_argument('--mel_dir', dest='mel_dir', default='/data/lichen/waveglow/training_mels', help='Path to input mel spectrogram (Output directory for processing dataset)')
-parser.add_argument('--wav_dir', dest='wav_dir', default='/data/lichen/waveglow/training_wavs', help='Path to input audio file for training (Output directory for processing dataset)')
+parser.add_argument('--metadata_dir', dest='metadata_dir', default='/var/pylon/data/speech/pylon/tts/ljspeech/tts-train.txt', help='Path to metadata.csv')
+parser.add_argument('--dataset_dir', dest='dataset_dir', default='data/lichen/TTS_data/LJSpeech-1.1/wavs', help='Path to audio file for preprocessing dataset')
+parser.add_argument('--mel_dir', dest='mel_dir', default='/var/pylon/data/speech/pylon/tts/ljspeech/mels', help='Path to input mel spectrogram (Output directory for processing dataset)')
+parser.add_argument('--wav_dir', dest='wav_dir', default='/var/pylon/data/speech/pylon/tts/ljspeech/audio', help='Path to input audio file for training (Output directory for processing dataset)')
 
 ##Output Path##
 parser.add_argument('--saving_path', dest='saving_path', default='../model', help='Path to save model if specified')
@@ -51,8 +51,8 @@ parser.add_argument('--summary_dir', dest='summary_dir', default='../summary', h
 ##Audio Processing Params##
 #STFT
 parser.add_argument('--num_freq', dest='num_freq', type=int, default=513, help='Number of frequency bins for STFT')
-parser.add_argument('--hop_length', dest='hop_length', type=int, default=256, help='Hop length for STFT')
-parser.add_argument('--window_size', dest='window_size', type=int, default=1024, help='Window size for STFT')
+parser.add_argument('--hop_length', dest='hop_length', type=int, default=200, help='Hop length for STFT')
+parser.add_argument('--window_size', dest='window_size', type=int, default=800, help='Window size for STFT')
 #Mels
 parser.add_argument('--n_mel', dest='n_mel', type=int, default=80, help='Channel Size of Inputs')
 parser.add_argument('--fmin', dest='fmin', type=int, default=0, help='Minimum Frequency of Mel Banks')

@@ -63,9 +63,9 @@ class multiproc_reader():
                     cnt.value = 0
                 self.lock.release()
                 cmetadata = self.metadata[c]
-                name, _, text = cmetadata
-                melname = os.path.join(args.mel_dir, name) + '.npy'
-                wavname = os.path.join(args.wav_dir, name) + '.npy'
+                name, _, _, _, _, _, text = cmetadata
+                melname = os.path.join(args.mel_dir, name.replace('-audio-', '-mel-'))
+                wavname = os.path.join(args.wav_dir, name)
                 mel, audio = padtomaxlen(np.load(melname), np.load(wavname))
                 mels.append(mel)
                 wavs.append(audio)
@@ -91,7 +91,7 @@ class multiproc_reader_val(multiproc_reader):
     def load_metadata(self):
         with open(args.metadata_dir, 'r') as f:
             self.metadata = [line.strip().split('|') for line in f]
-            self.metadata = self.metadata[int(len(self.metadata) * args.valsplit): ]
+            self.metadata = self.metadata[int(len(self.metadata) * args.valsplit):]
         self.n_examples = len(self.metadata)
         print ("Total number of audio/text pair for validation: %r" %self.n_examples)
 
@@ -105,8 +105,8 @@ class multiproc_reader_val(multiproc_reader):
                 cnt.value = 0
             self.lock.release()
             cmetadata = self.metadata[c]
-            name, _, text = cmetadata
-            melname = os.path.join(args.mel_dir, name) + '.npy'
+            name, _, _, _, _, _, text = cmetadata
+            melname = os.path.join(args.mel_dir, name.replace('-audio-', '-mel-'))
             mel = np.load(melname)
             #truncate the samples due to GPU memory consideration
             if args.truncate_sample:
