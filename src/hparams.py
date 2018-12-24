@@ -13,7 +13,7 @@ parser.add_argument('--lr', dest='lr', type=float, default=1e-4, help='Initial L
 parser.add_argument('--lr_decay_rate', dest='lr_decay_rate', type=float, default=0.5, help='Decay rate of exponential learning rate decay')
 parser.add_argument('--lr_decay_steps', dest='lr_decay_steps', type=int, default=300000, help='Decay steps of exponential learning rate decay')
 #Epoch Settings
-parser.add_argument('--epoch', dest='epoch', type=int, default=100000, help='Number of Epochs')
+parser.add_argument('--epoch', dest='epoch', type=int, default=500, help='Number of Epochs')
 parser.add_argument('--display_step', dest='display_step', type=int, default=100, help='Batch to Output Training Details')
 parser.add_argument('--saving_epoch', dest='saving_epoch', type=int, default=2, help='Epoch to Save Model')
 parser.add_argument('--sample_epoch', dest='sample_epoch', type=int, default=1, help='Epoch to Sample')
@@ -43,10 +43,10 @@ parser.add_argument('--mel_dir', dest='mel_dir', default='/var/pylon/data/speech
 parser.add_argument('--wav_dir', dest='wav_dir', default='/var/pylon/data/speech/pylon/tts/ljspeech/audio', help='Path to input audio file for training (Output directory for processing dataset)')
 
 ##Output Path##
-parser.add_argument('--saving_path', dest='saving_path', default='../model', help='Path to save model if specified')
-parser.add_argument('--loading_path', dest='loading_path', default='../model', help='Path to load model if specified')
-parser.add_argument('--sampling_path', dest='sampling_path', default='../samples', help='Path to save samples if specified')
-parser.add_argument('--summary_dir', dest='summary_dir', default='../summary', help='Path to save summaries')
+parser.add_argument('--saving_path', dest='saving_path', default='../model-retrain', help='Path to save model if specified')
+parser.add_argument('--loading_path', dest='loading_path', default='../model-retrain', help='Path to load model if specified')
+parser.add_argument('--sampling_path', dest='sampling_path', default='../samples-retrain', help='Path to save samples if specified')
+parser.add_argument('--summary_dir', dest='summary_dir', default='../summary-retrain', help='Path to save summaries')
 
 ##Audio Processing Params##
 #STFT
@@ -58,11 +58,11 @@ parser.add_argument('--n_mel', dest='n_mel', type=int, default=80, help='Channel
 parser.add_argument('--fmin', dest='fmin', type=int, default=0, help='Minimum Frequency of Mel Banks')
 parser.add_argument('--fmax', dest='fmax', type=int, default=7600, help='Maximum Frequency of Mel Banks')
 #Silence
-parser.add_argument('--trim_hop_length', dest='trim_hop_length', type=int, default=256, help='Hop length for trimming silence')
-parser.add_argument('--trim_window_size', dest='trim_window_size', type=int, default=1024, help='Window size for trimming silence')
+parser.add_argument('--trim_hop_length', dest='trim_hop_length', type=int, default=200, help='Hop length for trimming silence')
+parser.add_argument('--trim_window_size', dest='trim_window_size', type=int, default=800, help='Window size for trimming silence')
 parser.add_argument('--trim_inner_scilence', dest='trim_inner_scilence', default=False, action='store_true', help='Specify to trim the inner slience')
 #Preprocessing
-parser.add_argument('--sample_rate', dest='sample_rate', type=int, default=22050, help='Sample Rate of Input Audios')
+parser.add_argument('--sample_rate', dest='sample_rate', type=int, default=16000, help='Sample Rate of Input Audios')
 parser.add_argument('--trim_top_db', dest='trim_top_db', type=float, default=10, help='Top dB for trimming scilence')
 parser.add_argument('--clip_to_value', dest='clip_to_value', type=float, default=4.0, help='Max/Min value of mel spectrogram')
 parser.add_argument('--ref_db', dest='ref_db', type=float, default=45, help='Value to subtract to normalize mel spectrogram')
@@ -73,8 +73,8 @@ parser.add_argument('--n_flows', dest='n_flows', type=int, default=12, help='Num
 parser.add_argument('--squeeze_size', dest='squeeze_size', type=int, default=8, help='Number of channels of input wavs')
 parser.add_argument('--early_output_size', dest='early_output_size', type=int, default=2, help='Number of channels per early output')
 parser.add_argument('--early_output_every', dest='early_output_every', type=int, default=4, help='Number of flows per early output')
-parser.add_argument('--sigma', dest='sigma', type=float, default=1.0, help='Stddev for the gaussian prior during training')
-parser.add_argument('--infer_sigma', dest='infer_sigma', type=float, default=0.6, help='Stddev for the gaussian prior during inference')
+parser.add_argument('--sigma', dest='sigma', type=float, default=0.707, help='Stddev for the gaussian prior during training')
+parser.add_argument('--infer_sigma', dest='infer_sigma', type=float, default=0.707, help='Stddev for the gaussian prior during inference')
 
 ##WaveNet##
 parser.add_argument('--wavnet_channels', dest='wavnet_channels', type=int, default=512, help='Number of WaveNet channels')

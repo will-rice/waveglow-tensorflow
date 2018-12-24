@@ -64,7 +64,7 @@ class multiproc_reader():
                 self.lock.release()
                 cmetadata = self.metadata[c]
                 name, _, _, _, _, _, text = cmetadata
-                melname = os.path.join(args.mel_dir, name.replace('-audio-', '-mel-'))
+                melname = os.path.join(args.mel_dir, name.replace('speech-audio-', 'speech-mel-'))
                 wavname = os.path.join(args.wav_dir, name)
                 mel, audio = padtomaxlen(np.load(melname), np.load(wavname))
                 mels.append(mel)
@@ -106,7 +106,7 @@ class multiproc_reader_val(multiproc_reader):
             self.lock.release()
             cmetadata = self.metadata[c]
             name, _, _, _, _, _, text = cmetadata
-            melname = os.path.join(args.mel_dir, name.replace('-audio-', '-mel-'))
+            melname = os.path.join(args.mel_dir, name.replace('speech-audio-', 'sushibot-mel-'))
             mel = np.load(melname)
             #truncate the samples due to GPU memory consideration
             if args.truncate_sample:
